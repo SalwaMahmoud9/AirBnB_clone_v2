@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-
-"""
-This module defines the base class inherited by all other ORM classes
-"""
-import uuid
+"""Defines a base model class."""
+import models
+import json
+from uuid import uuid4
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
@@ -12,53 +11,69 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """
-    A base class for all hbnb models
-    """
+    """docstring for BaseModel"""
     id = Column(String(60), unique=True, primary_key=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
 
     def __init__(self, **kwargs):
-        """Instatntiates a new model"""
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        """Initialize a Base.
+
+        Args:
+            id: id of the Base.
+            created_at: created_at of the Base.
+            updated_at: iupdated_atd of the Base.
+        """
         if kwargs:
-            if kwargs.get('__class__', None):
-                del kwargs['__class__']
-            for k, v in kwargs.items():
-                if k == 'created_at' or k == 'updated_at':
-                    v = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
-                self.__dict__.update({k: v})
-
-    def save(self):
-        """Updates updated_at with current time when instance is changed"""
-        from models import storage
-        self.updated_at = datetime.now()
-        storage.new(self)
-        storage.save()
-
-    def delete(self):
-        """Deletes the current instance from storage"""
-        from models import storage
-        storage.delete(self)
-
-    def to_dict(self):
-        """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        dictionary.pop('_sa_instance_state', None)
-        return dictionary
+            for key, value in kwargs.items():
+                if key not in ["__class__", "created_at", "updated_at"]:
+                    setattr(self, key, value)
+                if key == "created_at":
+                    self.created_at = datetime.strptime(value,
+                                                        "%Y-%m-%dT%H:%M:%S.%f")
+                if key == "updated_at":
+                    self.updated_at = datetime.strptime(value,
+                                                        "%Y-%m-%dT%H:%M:%S.%f")
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
-        """Returns a string representation of the instance"""
+        """Return class name, id, and the dictionary"""
         attributes = {}
         attributes.update(self.__dict__)
         attributes.pop('_sa_instance_state', None)
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, attributes)
+        return '[{}] ({}) {}'.format(cls, self.id, attributes)        
+
+    def save(self):
+        """save"""
+        self.updated_at = datetime.now()
+        models.storage.save()
+
+    def to_dict(self):
+        """Return dictionary"""
+        dic = {}
+        dic.update(self.__dict__)
+        dic.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dic['created_at'] = self.created_at.isoformat()
+        dic['updated_at'] = self.updated_at.isoformat()
+        dic.pop('_sa_instance_state', None)
+        return dic 
+       
+    def __repr__(self):
+        """
+        returns string repr
+        """
+        return (self.__str__())
+
+    def delete(self):
+        """Delete"""
+        models.storage.delete(self)
+
+    
+
+    

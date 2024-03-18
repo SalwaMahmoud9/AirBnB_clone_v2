@@ -1,20 +1,18 @@
 #!/usr/bin/python3
+"""Amenity"""
 
-"""
-A module that defines the ORM class for Amenity table
-"""
 from os import getenv
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy.orm import relationship
 from models.place import place_amenity
 from models.base_model import Base, BaseModel
+import json
 
 
 class Amenity(BaseModel, Base):
-    """
-    Defines Amenity class attributes
-    """
+    """child from BaseModel class"""
+    
     __tablename__ = 'amenities'
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
