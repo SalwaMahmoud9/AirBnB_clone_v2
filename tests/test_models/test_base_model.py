@@ -29,19 +29,12 @@ class test_basemodel(unittest.TestCase):
         except Exception:
             pass
 
-    def test_default(self):
+    def test_basemodel_default(self):
         """ basemodel """
         i = self.value()
         self.assertEqual(type(i), self.value)
 
-    def test_kwargs(self):
-        """ basemodel """
-        i = self.value()
-        copy = i.to_dict()
-        new = BaseModel(**copy)
-        self.assertFalse(new is i)
-
-    def test_kwargs_int(self):
+    def test_basemodel_kwargsInt(self):
         """ basemodel """
         i = self.value()
         copy = i.to_dict()
@@ -49,8 +42,15 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
-    def test_save(self):
-        """ Testing save """
+    def test_basemodel_kwargs(self):
+        """ basemodel """
+        i = self.value()
+        copy = i.to_dict()
+        new = BaseModel(**copy)
+        self.assertFalse(new is i)
+
+    def test_basemodel_save(self):
+        """ basemodel """
         i = self.value()
         i.save()
         key = self.name + "." + i.id
@@ -58,8 +58,8 @@ class test_basemodel(unittest.TestCase):
             j = json.load(f)
             self.assertEqual(j[key], i.to_dict())
 
-    def test_str(self):
-        """ """
+    def test_basemodel_string(self):
+        """ basemodel """
         i = self.value()
         dictionary = {}
         dictionary.update(i.__dict__)
@@ -68,36 +68,36 @@ class test_basemodel(unittest.TestCase):
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          dictionary))
 
-    def test_todict(self):
-        """ """
+    def test_basemodel_todict(self):
+        """ basemodel """
         i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
 
-    def test_kwargs_none(self):
-        """ """
+    def test_basemodel_kwargsNone(self):
+        """ basemodel """
         n = {None: None}
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
-    def test_kwargs_one(self):
-        """ """
+    def test_basemodel_kwargs1(self):
+        """ basemodel """
         n = {'name': 'test'}
         new = self.value(**n)
         self.assertEqual(new.name, n['name'])
 
-    def test_id(self):
-        """ """
+    def test_basemodel_id(self):
+        """ basemodel """
         new = self.value()
         self.assertEqual(type(new.id), str)
 
-    def test_created_at(self):
-        """ """
+    def test_basemodel_created(self):
+        """ basemodel """
         new = self.value()
         self.assertEqual(type(new.created_at), datetime.datetime)
 
-    def test_updated_at(self):
-        """ """
+    def test_basemodel_updated(self):
+        """ basemodel """
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
         n = new.to_dict()
