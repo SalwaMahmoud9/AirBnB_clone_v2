@@ -1,7 +1,11 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+"""Amenity"""
+
 from models.base_model import BaseModel
+import json
 
 
 class Amenity(BaseModel):
+    """child from BaseModel class"""
+
     name = ""

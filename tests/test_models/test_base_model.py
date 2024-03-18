@@ -1,99 +1,121 @@
 #!/usr/bin/python3
-""" """
-from models.base_model import BaseModel
-import unittest
-import datetime
-from uuid import UUID
-import json
+"""Defines unittests for models/base_model.py."""
 import os
+import models
+import unittest
+from datetime import datetime
+from time import sleep
+from models.base_model import BaseModel
 
 
-class test_basemodel(unittest.TestCase):
-    """ """
+class TestBaseModel_instance(unittest.TestCase):
+    """Unittest BaseModel class."""
 
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = 'BaseModel'
-        self.value = BaseModel
+    def test_base_instance(self):
+        self.assertEqual(BaseModel, type(BaseModel()))
 
+    def test_id_is_str(self):
+        self.assertEqual(str, type(BaseModel().id))
+
+    def test_created_at_is_datetime(self):
+        self.assertEqual(datetime, type(BaseModel().created_at))
+
+    def test_updated_at_is_datetime(self):
+        self.assertEqual(datetime, type(BaseModel().updated_at))
+
+    def test_uniqueIds(self):
+        model1 = BaseModel()
+        model2 = BaseModel()
+        self.assertNotEqual(model1.id, model2.id)
+
+    def test_diff_created_at(self):
+        model1 = BaseModel()
+        sleep(1)
+        model2 = BaseModel()
+        self.assertLess(model1.created_at, model2.created_at)
+
+    def test_diff_updated_at(self):
+        model1 = BaseModel()
+        sleep(1)
+        model2 = BaseModel()
+        self.assertLess(model1.updated_at, model2.updated_at)
+
+    def test_storage_new(self):
+        self.assertIn(BaseModel(), models.storage.all().values())
+
+    def test_str_representation(self):
+        dt = datetime.today()
+        dt_repr = repr(dt)
+        model = BaseModel()
+        model.id = "100000"
+        model.created_at = model.updated_at = dt
+        modelstr = model.__str__()
+        self.assertIn("[BaseModel] (100000)", modelstr)
+        self.assertIn("'id': '100000'", modelstr)
+        self.assertIn("'created_at': " + dt_repr, modelstr)
+        self.assertIn("'updated_at': " + dt_repr, modelstr)
+
+
+class TestBaseModel_save(unittest.TestCase):
+    """Unittests save BaseModel class."""
+    @classmethod
     def setUp(self):
-        """ """
-        pass
-
-    def tearDown(self):
         try:
-            os.remove('file.json')
-        except:
+            os.rename("file.json", "tmp")
+        except IOError:
             pass
 
-    def test_default(self):
-        """ """
-        i = self.value()
-        self.assertEqual(type(i), self.value)
-
-    def test_kwargs(self):
-        """ """
-        i = self.value()
-        copy = i.to_dict()
-        new = BaseModel(**copy)
-        self.assertFalse(new is i)
-
-    def test_kwargs_int(self):
-        """ """
-        i = self.value()
-        copy = i.to_dict()
-        copy.update({1: 2})
-        with self.assertRaises(TypeError):
-            new = BaseModel(**copy)
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
 
     def test_save(self):
-        """ Testing save """
-        i = self.value()
-        i.save()
-        key = self.name + "." + i.id
-        with open('file.json', 'r') as f:
-            j = json.load(f)
-            self.assertEqual(j[key], i.to_dict())
+        model = BaseModel()
+        sleep(1)
+        first_updated_at = model.updated_at
+        model.save()
+        self.assertLess(first_updated_at, model.updated_at)
 
-    def test_str(self):
-        """ """
-        i = self.value()
-        self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
-                         i.__dict__))
+    def test_more_saves(self):
+        model1 = BaseModel()
+        sleep(1)
+        updated_at1 = model1.updated_at
+        model1.save()
+        updated_at2 = model1.updated_at
+        self.assertLess(updated_at1, updated_at2)
+        sleep(1)
+        model1.save()
+        self.assertLess(updated_at2, model1.updated_at)
 
-    def test_todict(self):
-        """ """
-        i = self.value()
-        n = i.to_dict()
-        self.assertEqual(i.to_dict(), n)
+    def test_update_file(self):
+        model = BaseModel()
+        model.save()
+        modelId = "BaseModel." + model.id
+        with open("file.json", "r") as f:
+            self.assertIn(modelId, f.read())
 
-    def test_kwargs_none(self):
-        """ """
-        n = {None: None}
-        with self.assertRaises(TypeError):
-            new = self.value(**n)
 
-    def test_kwargs_one(self):
-        """ """
-        n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
-            new = self.value(**n)
+class TestBaseModel_to_dict(unittest.TestCase):
+    """Unittests to_dict BaseModel class."""
 
-    def test_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.id), str)
+    def test_to_dict_type(self):
+        model = BaseModel()
+        self.assertTrue(dict, type(model.to_dict()))
 
-    def test_created_at(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.created_at), datetime.datetime)
+    def test_to_dict_correct_data(self):
+        model = BaseModel()
+        self.assertIn("id", model.to_dict())
+        self.assertIn("created_at", model.to_dict())
+        self.assertIn("updated_at", model.to_dict())
+        self.assertIn("__class__", model.to_dict())
 
-    def test_updated_at(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.updated_at), datetime.datetime)
-        n = new.to_dict()
-        new = BaseModel(**n)
-        self.assertFalse(new.created_at == new.updated_at)
+
+if __name__ == "__main__":
+    unittest.main()

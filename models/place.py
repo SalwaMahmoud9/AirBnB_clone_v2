@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
+"""Place"""
+
 from models.base_model import BaseModel
+import json
 
 
 class Place(BaseModel):
-    """ A place to stay """
+    """child from BaseModel class"""
+
     city_id = ""
     user_id = ""
     name = ""
