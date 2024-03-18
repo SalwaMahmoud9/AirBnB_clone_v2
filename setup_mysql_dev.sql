@@ -1,9 +1,9 @@
--- This sql script prepares a MySQL server for the project
--- Creates a database
--- creates a new uer in localhost
--- sets users password
--- grants ALL privilege on the created database
--- grants SELECT privilege on the database performance_schema
+-- sql script
+-- Creates database
+-- creates new user
+-- add users password
+-- grants ALL privilege
+-- grants performance_schema
 
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
 

@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" """
+""" basemodel """
 from models.base_model import BaseModel
 import unittest
 import datetime
@@ -11,16 +11,16 @@ import os
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
                  'basemodel test not supported')
 class test_basemodel(unittest.TestCase):
-    """ """
+    """ basemodel """
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """ basemodel """
         super().__init__(*args, **kwargs)
         self.name = 'BaseModel'
         self.value = BaseModel
 
     def setUp(self):
-        """ """
+        """ basemodel """
         pass
 
     def tearDown(self):
@@ -30,19 +30,19 @@ class test_basemodel(unittest.TestCase):
             pass
 
     def test_default(self):
-        """ """
+        """ basemodel """
         i = self.value()
         self.assertEqual(type(i), self.value)
 
     def test_kwargs(self):
-        """ """
+        """ basemodel """
         i = self.value()
         copy = i.to_dict()
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
     def test_kwargs_int(self):
-        """ """
+        """ basemodel """
         i = self.value()
         copy = i.to_dict()
         copy.update({1: 2})
