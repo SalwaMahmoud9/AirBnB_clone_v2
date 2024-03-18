@@ -1,25 +1,12 @@
 #!/usr/bin/python3
+"""City"""
 
-"""
-A module that defines the ORM class for City table
-"""
-from os import getenv
-from sqlalchemy.orm import relationship
-from models.base_model import Base, BaseModel
-from sqlalchemy import Column, ForeignKey, String
+from models.base_model import BaseModel
+import json
 
 
-class City(BaseModel, Base):
-    """
-    The city class, contains state ID and name
-    """
-    __tablename__ = 'cities'
+class City(BaseModel):
+    """child from BaseModel class"""
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        name = Column(String(128), nullable=False)
-        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
-        places = relationship(
-            'Place', backref='cities', cascade='all, delete, delete-orphan')
-    else:
-        name = ''
-        state_id = ''
+    state_id = ""
+    name = ""

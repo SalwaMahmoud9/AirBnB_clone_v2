@@ -1,27 +1,13 @@
 #!/usr/bin/python3
+"""Review"""
 
-"""
-A module that defines ORM class for Review table
-"""
-from os import getenv
-from sqlalchemy import Column, ForeignKey
-from sqlalchemy import String
-from models.base_model import Base, BaseModel
+from models.base_model import BaseModel
+import json
 
 
-class Review(BaseModel, Base):
-    """
-    Defines attributes for Review table
-    """
-    __tablename__ = 'reviews'
+class Review(BaseModel):
+    """child from BaseModel class"""
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        text = Column(String(1024), nullable=False)
-        place_id = Column(
-            String(60), ForeignKey('places.id'), nullable=False)
-        user_id = Column(
-            String(60), ForeignKey('users.id'), nullable=False)
-    else:
-        text = ''
-        place_id = ''
-        user_id = ''
+    place_id = ""
+    user_id = ""
+    text = ""
