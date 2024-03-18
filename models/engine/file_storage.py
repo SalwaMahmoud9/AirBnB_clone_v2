@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-This module defines a class to manage file storage for hbnb clone
+file_storage
 """
 import json
 from models.base_model import BaseModel
@@ -14,12 +14,12 @@ from models.amenity import Amenity
 
 
 class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
+    """FileStorage"""
     __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
+        """all"""
         if cls is not None:
             if type(cls) == str:
                 cls = eval(cls)
@@ -27,11 +27,11 @@ class FileStorage:
         return self.__objects
 
     def new(self, obj):
-        """Adds new object to storage dictionary"""
+        """new"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
-        """Saves storage dictionary to file"""
+        """save"""
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
             temp.update(FileStorage.__objects)
@@ -39,14 +39,8 @@ class FileStorage:
                 temp[key] = val.to_dict()
             json.dump(temp, f)
 
-    def delete(self, obj=None):
-        """Deletes obj from '__objects'"""
-        if obj is not None:
-            key = obj.to_dict()['__class__'] + '.' + obj.id
-            self.all().pop(key, None)
-
     def reload(self):
-        """Loads storage dictionary from file"""
+        """reload"""
         classes = {
             'BaseModel': BaseModel,
             'User': User, 'Place': Place, 'State': State,
@@ -62,7 +56,12 @@ class FileStorage:
             pass
 
     def close(self):
-        """
-        Calls reload() method
-        """
+        """close"""
         self.reload()
+    
+    def delete(self, obj=None):
+        """delete"""
+        if obj is not None:
+            key = obj.to_dict()['__class__'] + '.' + obj.id
+            self.all().pop(key, None)
+

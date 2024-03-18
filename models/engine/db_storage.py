@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines extensively the database storage for this project
+models
 """
 from os import getenv
 from models.base_model import Base
@@ -17,12 +17,12 @@ from sqlalchemy.orm import scoped_session
 
 
 class DBStorage:
-    """Database utilities definition"""
+    """DBStorage"""
     __engine = None
     __session = None
 
     def __init__(self):
-        """Instantiation method"""
+        """__init__"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
             getenv('HBNB_MYSQL_USER'), getenv('HBNB_MYSQL_PWD'),
             getenv('HBNB_MYSQL_HOST'), getenv('HBNB_MYSQL_DB')
@@ -33,8 +33,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Makes a query to the database
-        if cls is given, query for cls only else query for all"""
+        """all"""
         objs = []
         if cls is None:
             Classes = [User, City, State, Place, Review, Amenity]
@@ -49,20 +48,15 @@ class DBStorage:
         return {'{}.{}'.format(type(o).__name__, o.id): o for o in objs}
 
     def new(self, obj):
-        """Adds the object to the current database session"""
+        """new"""
         self.__session.add(obj)
 
     def save(self):
-        """Commits all changes of the current database session"""
+        """save"""
         self.__session.commit()
 
-    def delete(self, obj=None):
-        """Deletes from the current database session"""
-        if obj is not None:
-            self.__session.delete(obj)
-
     def reload(self):
-        """Create all tables in the database"""
+        """reload"""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
             bind=self.__engine, expire_on_commit=False
@@ -71,5 +65,10 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """Dispose of the current Session, if present."""
+        """close."""
         self.__session.close()
+
+    def delete(self, obj=None):
+        """delete"""
+        if obj is not None:
+            self.__session.delete(obj)        

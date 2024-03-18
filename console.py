@@ -80,23 +80,6 @@ class HBNBCommand(cmd.Cmd):
         """ do_quit """
         return True
 
-    def help_quit(self):
-        """ help_quit  """
-        print("Exits the program with formatting\n")
-
-    def do_EOF(self, arg):
-        """ do_EOF """
-        print()
-        return True
-
-    def help_EOF(self):
-        """ help_EOF """
-        print("Exits the program without formatting\n")
-
-    def emptyline(self):
-        """ emptyline """
-        pass
-
     def do_create(self, args):
         """ do_create """
         params = self.__validateArgs(args)
@@ -108,6 +91,15 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
         except Exception:
             pass
+
+    def do_EOF(self, arg):
+        """ do_EOF """
+        print()
+        return True
+
+    def emptyline(self):
+        """ emptyline """
+        pass
 
     def __validateArgs(self, args):
         """ Validate """
@@ -132,12 +124,7 @@ class HBNBCommand(cmd.Cmd):
                     except Exception:
                         pass
         return params
-
-    def help_create(self):
-        """ help_create """
-        print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
-
+    
     def do_show(self, args):
         """ do_show """
         new = args.partition(" ")
@@ -154,11 +141,6 @@ class HBNBCommand(cmd.Cmd):
         objs = storage.all(c_name).values()
         obj = [v for v in objs if v.id == c_id]
         print("** no instance found **") if len(obj) == 0 else print(obj[0])
-
-    def help_show(self):
-        """ help_show """
-        print("Shows an individual instance of a class")
-        print("[Usage]: show <className> <objectId>\n")
 
     def do_destroy(self, args):
         """ do_destroy """
@@ -177,11 +159,6 @@ class HBNBCommand(cmd.Cmd):
         obj = [v for v in objs if v.id == c_id]
         print("** no instance found **") if len(obj) == 0 else obj[0].delete()
 
-    def help_destroy(self):
-        """ help_destroy """
-        print("Destroys an individual instance of a class")
-        print("[Usage]: destroy <className> <objectId>\n")
-
     def do_all(self, args):
         """ do_all """
         cls = None
@@ -193,20 +170,11 @@ class HBNBCommand(cmd.Cmd):
         objs = storage.all(cls)
         print([str(v) for v in objs.values()])
 
-    def help_all(self):
-        """ help_all """
-        print("Shows all objects, or all of a class")
-        print("[Usage]: all <className>\n")
-
     def do_count(self, args):
         """ do_count """
         if args not in self.classes:
             return print("** class doesn't exist **")
         print(len(storage.all(args).values()))
-
-    def help_count(self):
-        """ help_count """
-        print("Usage: count <class_name>")
 
     def do_update(self, args):
         """ do_update """
@@ -282,6 +250,38 @@ class HBNBCommand(cmd.Cmd):
         """ help_update """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+    def help_all(self):
+        """ help_all """
+        print("Shows all objects, or all of a class")
+        print("[Usage]: all <className>\n")
+
+    def help_count(self):
+        """ help_count """
+        print("Usage: count <class_name>")
+
+    def help_destroy(self):
+        """ help_destroy """
+        print("Destroys an individual instance of a class")
+        print("[Usage]: destroy <className> <objectId>\n")
+
+    def help_show(self):
+        """ help_show """
+        print("Shows an individual instance of a class")
+        print("[Usage]: show <className> <objectId>\n")
+
+    def help_create(self):
+        """ help_create """
+        print("Creates a class of any type")
+        print("[Usage]: create <className>\n")
+
+    def help_quit(self):
+        """ help_quit  """
+        print("Exits the program with formatting\n")
+
+    def help_EOF(self):
+        """ help_EOF """
+        print("Exits the program without formatting\n")
 
 
 if __name__ == "__main__":
