@@ -1,13 +1,10 @@
 #!/usr/bin/python3
-"""Review"""
-
+""" Review module for the HBNB project """
 from models.base_model import BaseModel
-import json
 
 
 class Review(BaseModel):
-    """child from BaseModel class"""
-
+    """ Review classto store review information """
     place_id = ""
     user_id = ""
     text = ""

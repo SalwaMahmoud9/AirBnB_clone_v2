@@ -1,12 +1,9 @@
 #!/usr/bin/python3
-"""City"""
-
+""" City Module for HBNB project """
 from models.base_model import BaseModel
-import json
 
 
 class City(BaseModel):
-    """child from BaseModel class"""
-
+    """ The city class, contains state ID and name """
     state_id = ""
     name = ""
