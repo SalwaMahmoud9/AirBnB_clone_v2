@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines ORM class for Review table
+Review
 """
 from os import getenv
 from sqlalchemy import Column, ForeignKey
@@ -11,7 +11,7 @@ from models.base_model import Base, BaseModel
 
 class Review(BaseModel, Base):
     """
-    Defines attributes for Review table
+    Review
     """
     __tablename__ = 'reviews'
 

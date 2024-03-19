@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines the ORM class for City table
+City
 """
 from os import getenv
 from sqlalchemy.orm import relationship
@@ -11,7 +11,7 @@ from sqlalchemy import Column, ForeignKey, String
 
 class City(BaseModel, Base):
     """
-    The city class, contains state ID and name
+    City
     """
     __tablename__ = 'cities'
 

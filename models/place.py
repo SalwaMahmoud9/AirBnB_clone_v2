@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines Place class using ORM
+Place
 """
 from os import getenv
 from sqlalchemy import Table
@@ -28,7 +28,7 @@ place_amenity = Table(
 
 class Place(BaseModel, Base):
     """
-    Defines attributes for a Place table
+    Place
     """
     __tablename__ = 'places'
 
@@ -66,7 +66,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
-            """Fetches reviews related to a place object from file storage"""
+            """reviews"""
             from models import storage
             from models.review import Review
             revs = list(storage.all(Review).values())
@@ -75,7 +75,7 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """
-            Returns (list): List of Amenities linked to Place instance
+            amenities
             """
             from models import storage
             from models.amenity import Amenity
@@ -85,7 +85,7 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, obj):
             """
-            Appends an Amenity object to amenity_ids
+            amenities setter
             """
             from models.amenity import Amenity
             if isinstance(obj, Amenity) and type(obj) == Amenity:

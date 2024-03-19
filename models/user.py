@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines the ORM class for User table
+User
 """
 from os import getenv
 from models.base_model import Base, BaseModel
@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 class User(BaseModel, Base):
     """
-    Defines attributes for User table
+    User
     """
     __tablename__ = 'users'
 

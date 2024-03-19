@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines the ORM class for Amenity table
+Amenity
 """
 from os import getenv
 from sqlalchemy import Column
@@ -13,7 +13,7 @@ from models.base_model import Base, BaseModel
 
 class Amenity(BaseModel, Base):
     """
-    Defines Amenity class attributes
+    Amenity
     """
     __tablename__ = 'amenities'
 

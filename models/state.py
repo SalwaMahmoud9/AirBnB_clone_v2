@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-A module that defines the ORM class for State table
+State
 """
 import os
 from models.base_model import Base, BaseModel
@@ -11,7 +11,7 @@ from sqlalchemy.orm import relationship
 
 class State(BaseModel, Base):
     """
-    Defines attributes for State table
+    State
     """
     __tablename__ = 'states'
 
@@ -24,8 +24,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """
-            Returns (list): List of City instances
-            with state_id equals to the current State.id
+            cities
             """
             from models.city import City
             from models import storage
