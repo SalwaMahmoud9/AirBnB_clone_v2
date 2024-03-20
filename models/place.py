@@ -14,9 +14,6 @@ from sqlalchemy import ColumnDefault
 from sqlalchemy.orm import relationship
 from models.base_model import Base
 from models.base_model import BaseModel
-from models import storage
-from models.review import Review
-from models.amenity import Amenity
 
 place_amenity = Table(
     'place_amenity', Base.metadata,
@@ -70,6 +67,8 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """reviews"""
+            from models import storage
+            from models.review import Review
             revs = list(storage.all(Review).values())
             return [r for r in revs if r.place_id == self.id]
 
@@ -78,6 +77,8 @@ class Place(BaseModel, Base):
             """
             amenities
             """
+            from models import storage
+            from models.amenity import Amenity
             amenitees = storage.all(Amenity).values()
             return [a for a in amenitees if a.id in self.amenity_ids]
 
@@ -85,6 +86,7 @@ class Place(BaseModel, Base):
         def amenities(self, obj):
             """
             amenities setter
-            """            
+            """
+            from models.amenity import Amenity
             if isinstance(obj, Amenity) and type(obj) == Amenity:
                 self.amenity_ids.append(obj.id)
