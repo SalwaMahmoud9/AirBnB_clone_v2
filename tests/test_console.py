@@ -99,7 +99,7 @@ class TestDBStorageWithConsole(unittest.TestCase):
 class TestHBNBCommand(unittest.TestCase):
     """TestDBStorageWithConsole"""
 
-    def test_DBStorage_console_v_0_0_1(self):
+    def test_DBStorage_consolev001(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -122,7 +122,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertTrue(cs.onecmd('EOF'))
             self.assertTrue(cs.onecmd('quit'))
 
-    def test_DBStorage_console_v_0_1(self):
+    def test_DBStorage_consolev01(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -190,7 +190,7 @@ class TestHBNBCommand(unittest.TestCase):
             if os.path.isfile('file.json'):
                 os.unlink('file.json')
             self.assertFalse(os.path.isfile('file.json'))
-            cs.onecmd('update BaseModel {} first_name Chris'.format(mdl_id))
+            cs.onecmd('update BaseModel {} first_name Boy'.format(mdl_id))
             self.assertEqual(c.getvalue(), "")
             mdl_sid = 'BaseModel.{}'.format(mdl_id)
             self.assertTrue(mdl_sid in storage.all().keys())
@@ -198,7 +198,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertTrue(hasattr(storage.all()[mdl_sid], 'first_name'))
             self.assertEqual(
                 getattr(storage.all()[mdl_sid], 'first_name', ''),
-                'Chris'
+                'Boy'
             )
 
     def test_DBStorage_user(self):
@@ -217,11 +217,11 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn(mdl_id, c.getvalue())
             self.assertIn('[User] ({})'.format(mdl_id), c.getvalue())
             clear_stream(c)
-            cs.onecmd('update User {} first_name Akpanoko'.format(mdl_id))
+            cs.onecmd('update User {} first_name Girl'.format(mdl_id))
             cs.onecmd('show User {}'.format(mdl_id))
             self.assertIn(mdl_id, c.getvalue())
             self.assertIn(
-                "'first_name': 'Akpanoko'".format(mdl_id),
+                "'first_name': 'Girl'".format(mdl_id),
                 c.getvalue()
             )
             clear_stream(c)
@@ -242,7 +242,7 @@ class TestHBNBCommand(unittest.TestCase):
             cs.onecmd('show State {}'.format(mdl_id))
             self.assertIn(mdl_id, c.getvalue())
 
-    def test_DBStorage_class_all(self):
+    def test_DBStorage_classAll(self):
         from tests import clear_stream
         """test_class_all"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -254,7 +254,7 @@ class TestHBNBCommand(unittest.TestCase):
             cs.onecmd(cmd_line)
             self.assertIn(mdl_id, c.getvalue())
 
-    def test_DBStorage_class_show(self):
+    def test_DBStorage_classShow(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -266,7 +266,7 @@ class TestHBNBCommand(unittest.TestCase):
             cs.onecmd(cmd_line)
             self.assertIn(mdl_id, c.getvalue())
 
-    def test_DBStorage_class_destroy(self):
+    def test_DBStorage_classDestroy(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -280,7 +280,7 @@ class TestHBNBCommand(unittest.TestCase):
             cs.onecmd('show City {}'.format(mdl_id))
             self.assertEqual(c.getvalue(), "** no instance found **\n")
 
-    def test_DBStorage_create_with_kwargs_fsv(self):
+    def test_DBStorage_create_kwargsfsv(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -299,7 +299,7 @@ class TestHBNBCommand(unittest.TestCase):
                 self.assertIn("'password': 123", user_info)
             clear_stream(c)
 
-    def test_DBStorage_class_update1(self):
+    def test_DBStorage_class_update11(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
@@ -318,7 +318,7 @@ class TestHBNBCommand(unittest.TestCase):
                 c.getvalue()
             )
 
-    def test_DBStorage_class_update0(self):
+    def test_DBStorage_class_update00(self):
         from tests import clear_stream
         """TestDBStorageWithConsole"""
         with patch('sys.stdout', new=StringIO()) as c:
