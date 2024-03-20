@@ -18,19 +18,6 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def new(self, obj):
-        """new"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
-
-    def save(self):
-        """save"""
-        with open(FileStorage.__file_path, 'w') as f:
-            var1 = {}
-            var1.update(FileStorage.__objects)
-            for k, v in var1.items():
-                var1[k] = v.to_dict()
-            json.dump(var1, f)
-
     def all(self, cls=None):
         """all"""
         if cls is not None:
@@ -38,6 +25,19 @@ class FileStorage:
                 cls = eval(cls)
             return {k: v for k, v in self.__objects.items() if type(v) == cls}
         return self.__objects
+
+    def new(self, obj):
+        """new"""
+        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+
+    def save(self):
+        """save"""
+        with open(FileStorage.__file_path, 'w') as f:
+            temp = {}
+            temp.update(FileStorage.__objects)
+            for key, val in temp.items():
+                temp[key] = val.to_dict()
+            json.dump(temp, f)
 
     def reload(self):
         """reload"""
@@ -47,20 +47,21 @@ class FileStorage:
             'City': City, 'Amenity': Amenity, 'Review': Review
         }
         try:
-            var1 = {}
+            temp = {}
             with open(FileStorage.__file_path, 'r') as f:
-                var1 = json.load(f)
-                for k, v in var1.items():
-                    self.all()[k] = classes[v['__class__']](**v)
+                temp = json.load(f)
+                for key, val in temp.items():
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
     def close(self):
         """close"""
         self.reload()
-
+    
     def delete(self, obj=None):
         """delete"""
         if obj is not None:
-            k = obj.to_dict()['__class__'] + '.' + obj.id
-            self.all().pop(k, None)
+            key = obj.to_dict()['__class__'] + '.' + obj.id
+            self.all().pop(key, None)
+
