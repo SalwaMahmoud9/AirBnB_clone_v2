@@ -9,9 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 from models import storage
 
-
 Base = declarative_base()
-
 
 class BaseModel:
     """

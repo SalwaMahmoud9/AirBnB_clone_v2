@@ -8,7 +8,6 @@ from sqlalchemy.orm import relationship
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, ForeignKey, String
 
-
 class City(BaseModel, Base):
     """
     City

@@ -10,7 +10,6 @@ from sqlalchemy.orm import relationship
 from models.place import place_amenity
 from models.base_model import Base, BaseModel
 
-
 class Amenity(BaseModel, Base):
     """
     Amenity

@@ -27,7 +27,6 @@ place_amenity = Table(
     )
 )
 
-
 class Place(BaseModel, Base):
     """
     Place

@@ -8,7 +8,6 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy import String
 from models.base_model import Base, BaseModel
 
-
 class Review(BaseModel, Base):
     """
     Review

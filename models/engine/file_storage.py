@@ -12,7 +12,6 @@ from models.state import State
 from models.review import Review
 from models.amenity import Amenity
 
-
 class FileStorage:
     """FileStorage"""
     __file_path = 'file.json'
@@ -64,4 +63,3 @@ class FileStorage:
         if obj is not None:
             k = obj.to_dict()['__class__'] + '.' + obj.id
             self.all().pop(k, None)
-
