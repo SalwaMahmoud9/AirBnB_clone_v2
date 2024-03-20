@@ -55,7 +55,7 @@ class test_fileStorage(unittest.TestCase):
         storage.save()
         self.assertTrue(os.path.exists('file.json'))
 
-    def all(self, cls=None):
+    def all(self, cls=None):2
         """all"""
         if cls is not None:
             if type(cls) == str:
