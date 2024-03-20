@@ -71,4 +71,4 @@ class DBStorage:
     def delete(self, obj=None):
         """delete"""
         if obj is not None:
-            self.__session.delete(obj)        
+            self.__session.delete(obj)
