@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-""" """
+""" test_State"""
 from tests.test_models.test_base_model import test_basemodel
 from models.state import State
 import os
 
 
 class test_state(test_basemodel):
-    """ """
+    """test_State """
 
     def __init__(self, *args, **kwargs):
         """ """
@@ -14,7 +14,7 @@ class test_state(test_basemodel):
         self.name = "State"
         self.value = State
 
-    def test_name3(self):
+    def test_State_name(self):
         """ """
         new = self.value()
         self.assertEqual(type(new.name), str if
