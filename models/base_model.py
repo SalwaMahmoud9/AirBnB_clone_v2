@@ -5,9 +5,9 @@ BaseModel
 """
 import uuid
 from datetime import datetime
+from models import storage
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
-from models import storage
 
 Base = declarative_base()
 
@@ -39,14 +39,6 @@ class BaseModel:
         storage.new(self)
         storage.save()
 
-    def __str__(self):
-        """__str__"""
-        attributes = {}
-        attributes.update(self.__dict__)
-        attributes.pop('_sa_instance_state', None)
-        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, attributes)
-
     def to_dict(self):
         """to_dict"""
         dictionary = {}
@@ -57,6 +49,14 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
         dictionary.pop('_sa_instance_state', None)
         return dictionary
+
+    def __str__(self):
+        """__str__"""
+        attributes = {}
+        attributes.update(self.__dict__)
+        attributes.pop('_sa_instance_state', None)
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id, attributes)
 
     def delete(self):
         """delete"""

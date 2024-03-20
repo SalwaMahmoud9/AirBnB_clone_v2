@@ -17,7 +17,10 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
 
-    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        name = Column(String(128), nullable=False)
+        cities = relationship('City', backref='state', cascade='all, delete')
+    else:
         name = ''
 
         @property
@@ -27,6 +30,3 @@ class State(BaseModel, Base):
             """
             city_list = list(storage.all(City).values())
             return [city for city in city_list if city.state_id == self.id]
-    else:
-        name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state', cascade='all, delete')
