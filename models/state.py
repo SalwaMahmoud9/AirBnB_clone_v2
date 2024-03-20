@@ -10,6 +10,7 @@ from sqlalchemy.orm import relationship
 from models.city import City
 from models import storage
 
+
 class State(BaseModel, Base):
     """
     State
@@ -28,4 +29,4 @@ class State(BaseModel, Base):
             return [city for city in city_list if city.state_id == self.id]
     else:
         name = Column(String(128), nullable=False)
-        cities = relationship('City', backref='state', cascade='all, delete')        
+        cities = relationship('City', backref='state', cascade='all, delete')

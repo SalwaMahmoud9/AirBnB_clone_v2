@@ -27,6 +27,7 @@ place_amenity = Table(
     )
 )
 
+
 class Place(BaseModel, Base):
     """
     Place
@@ -88,4 +89,3 @@ class Place(BaseModel, Base):
             'Amenity', secondary=place_amenity,
             back_populates='place_amenities', viewonly=False
         )
-        

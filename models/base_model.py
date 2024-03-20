@@ -11,6 +11,7 @@ from models import storage
 
 Base = declarative_base()
 
+
 class BaseModel:
     """
     BaseModel

@@ -12,6 +12,7 @@ from models.state import State
 from models.review import Review
 from models.amenity import Amenity
 
+
 class FileStorage:
     """FileStorage"""
     __file_path = 'file.json'
@@ -29,14 +30,14 @@ class FileStorage:
             for k, v in var1.items():
                 var1[k] = v.to_dict()
             json.dump(var1, f)
-    
+
     def all(self, cls=None):
         """all"""
         if cls is not None:
             if type(cls) == str:
                 cls = eval(cls)
             return {k: v for k, v in self.__objects.items() if type(v) == cls}
-        return self.__objects        
+        return self.__objects
 
     def reload(self):
         """reload"""
@@ -57,7 +58,7 @@ class FileStorage:
     def close(self):
         """close"""
         self.reload()
-    
+
     def delete(self, obj=None):
         """delete"""
         if obj is not None:
