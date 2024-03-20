@@ -32,6 +32,14 @@ class BaseModel:
                     v = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
                 self.__dict__.update({k: v})
 
+    def __str__(self):
+        """__str__"""
+        attributes = {}
+        attributes.update(self.__dict__)
+        attributes.pop('_sa_instance_state', None)
+        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        return '[{}] ({}) {}'.format(cls, self.id, attributes)
+
     def save(self):
         """save"""
         from models import storage
@@ -49,14 +57,6 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
         dictionary.pop('_sa_instance_state', None)
         return dictionary
-
-    def __str__(self):
-        """__str__"""
-        attributes = {}
-        attributes.update(self.__dict__)
-        attributes.pop('_sa_instance_state', None)
-        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, attributes)
 
     def delete(self):
         """delete"""
