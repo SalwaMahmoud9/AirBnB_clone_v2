@@ -1,17 +1,13 @@
 #!/usr/bin/python3
-# clean web static
+# Fabfile
 import os
 from fabric.api import *
 
-env.hosts = ["104.196.168.90", "35.196.46.172"]
+env.hosts = ["54.160.85.72", "35.175.132.106"]
 
 
 def do_clean(number=0):
-    """do_clean.
-
-    Args:
-        number (int): number.
-    """
+    """Delete"""
     number = 1 if int(number) == 0 else int(number)
 
     archives = sorted(os.listdir("versions"))
