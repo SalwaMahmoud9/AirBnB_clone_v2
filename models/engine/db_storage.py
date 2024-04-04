@@ -32,6 +32,14 @@ class DBStorage:
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
+    def new(self, obj):
+        """new"""
+        self.__session.add(obj)
+
+    def save(self):
+        """save"""
+        self.__session.commit()
+
     def all(self, cls=None):
         """all"""
         objs = []
@@ -46,14 +54,6 @@ class DBStorage:
             Class = eval(cls) if type(cls) == str else cls
             objs = self.__session.query(Class).all()
         return {'{}.{}'.format(type(o).__name__, o.id): o for o in objs}
-
-    def new(self, obj):
-        """new"""
-        self.__session.add(obj)
-
-    def save(self):
-        """save"""
-        self.__session.commit()
 
     def reload(self):
         """reload"""

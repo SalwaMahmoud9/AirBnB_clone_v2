@@ -12,7 +12,7 @@ def clear_stream(stream: TextIO):
         stream.truncate(0)
 
 
-def reset_store(store: FileStorage, file_path='file.json'):
+def Test_AirBnb_reset_store(store: FileStorage, file_path='file.json'):
     """Test_AirBnb"""
     with open(file_path, mode='w') as f:
         f.write('{}')
@@ -20,19 +20,19 @@ def reset_store(store: FileStorage, file_path='file.json'):
             store.reload()
 
 
-def delete_file(file_path: str):
+def Test_AirBnb_delete_file(file_path: str):
     """Test_AirBnb"""
     if os.path.isfile(file_path):
         os.unlink(file_path)
 
 
-def write_text_file(file_name, text):
+def Test_AirBnb_write_text_file(file_name, text):
     """Test_AirBnb"""
     with open(file_name, mode='w') as f:
         f.write(text)
 
 
-def read_text_file(file_name):
+def Test_AirBnb_read_text_file(file_name):
     """Test_AirBnb"""
     lines = []
     if os.path.isfile(file_name):

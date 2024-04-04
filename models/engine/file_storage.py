@@ -18,13 +18,7 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self, cls=None):
-        """all"""
-        if cls is not None:
-            if type(cls) == str:
-                cls = eval(cls)
-            return {k: v for k, v in self.__objects.items() if type(v) == cls}
-        return self.__objects
+    
 
     def new(self, obj):
         """new"""
@@ -38,6 +32,14 @@ class FileStorage:
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
+
+    def all(self, cls=None):
+        """all"""
+        if cls is not None:
+            if type(cls) == str:
+                cls = eval(cls)
+            return {k: v for k, v in self.__objects.items() if type(v) == cls}
+        return self.__objects        
 
     def reload(self):
         """reload"""
